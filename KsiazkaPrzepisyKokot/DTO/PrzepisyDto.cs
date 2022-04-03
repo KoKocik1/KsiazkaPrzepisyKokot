@@ -6,20 +6,15 @@ using System.Threading.Tasks;
 
 namespace KsiazkaPrzepisyKokot.Models
 {
-    public class Przepisy
+    public class PrzepisyDto
     {
-        [Key]
         public int idPrzepisu { get; set; }
-        [Required]
         public string Przepis { get; set; }
-        [Required]
         public DateTime data { get; set; }
-        [MaxLength(100), Required]
         public string nazwaDania { get; set; }
-        [Required]
         public TimeSpan czas { get; set; }
-        [Required]
         public int liczbaPorcji { get; set; }
-        public int idSkladnik { get; set; }
+        public int idSkladnika { get; set; }
+        public Skladnik[] skladniki { get; set; }
     }
 }

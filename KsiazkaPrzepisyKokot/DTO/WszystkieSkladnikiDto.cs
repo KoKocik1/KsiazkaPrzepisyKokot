@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace KsiazkaPrzepisyKokot.Models
 {
-    public class WszystkieSkladniki
+    public class WszystkieSkladnikiDto
     {
-        [Key]
         public int idWszystkieSkladniki { get; set; }
         public string skladnik { get; set; }
         public double lyzka_kcal { get; set; }

@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 
 namespace KsiazkaPrzepisyKokot.Models
 {
-    public class Slone_przekaski 
+    public class CiastaDto : Przepisy
     {
-        [Key]
-        public int idSlonePrzekaski { get; set; }
+        public int idCiasta { get; set; }
+        public bool drozdzowe { get; set; }
         public bool na_zimno { get; set; }
         public bool na_cieplo { get; set; }
-        [ForeignKey("Przepis")]
-        public int idPrzepis { get; set; }
+        public bool ciasto_francuskie { get; set; }
+        public bool z_owsianka { get; set; }
+        public bool z_owocami { get; set; }
+
     }
 }
