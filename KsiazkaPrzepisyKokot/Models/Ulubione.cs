@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 
 namespace KsiazkaPrzepisyKokot.Models
 {
+    [Table("Ulubione")]
     public class Ulubione
     {
         [Key]
         public int idUlubione { get; set; }
 
-        [ForeignKey("Przepis")]
+        [Required]
         public int idPrzepis { get; set; }
+        [ForeignKey(nameof(idPrzepis)), Required]
+        public Przepisy przepis { get; set; }
     }
 }

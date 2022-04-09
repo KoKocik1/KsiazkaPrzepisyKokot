@@ -10,10 +10,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Implementacje\" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.15" />
   </ItemGroup>
 
 </Project>

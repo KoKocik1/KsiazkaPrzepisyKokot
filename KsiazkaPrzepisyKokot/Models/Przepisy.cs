@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace KsiazkaPrzepisyKokot.Models
 {
+    [Table("Przepisy")]
     public class Przepisy
     {
         [Key]
         public int idPrzepisu { get; set; }
-        [Required]
+        [Required, MaxLength(5000)]
         public string Przepis { get; set; }
         [Required]
         public DateTime data { get; set; }
@@ -20,6 +22,6 @@ namespace KsiazkaPrzepisyKokot.Models
         public TimeSpan czas { get; set; }
         [Required]
         public int liczbaPorcji { get; set; }
-        public int idSkladnik { get; set; }
+
     }
 }

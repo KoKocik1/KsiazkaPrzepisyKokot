@@ -7,14 +7,24 @@ using System.Threading.Tasks;
 
 namespace KsiazkaPrzepisyKokot.Models
 {
-    public class Skladnik
+    [Table("SkladnikiPrzepisu")]
+    public class SkladnikiPrzepisu
     {
         [Key]
         public int idSkladnika { get; set; }
-
-        [ForeignKey("idWszystkieSkladniki")]
+        [Required]
         public int idWszystkieSkladniki { get; set; }
+
+        [ForeignKey(nameof(idWszystkieSkladniki)), Required]
+        public WszystkieSkladniki wszystkieSkladniki { get; set; }
+        [Required]
+        public int idPrzepisu { get; set; }
+
+        [ForeignKey(nameof(idPrzepisu)), Required]
+        public Przepisy przepis { get; set; }
+        [Required]
         public string jaka_miara { get; set; }
+        [Required]
         public int ilosc { get; set; }
     }
 }

@@ -7,16 +7,15 @@ using System.Threading.Tasks;
 
 namespace KsiazkaPrzepisyKokot.Models
 {
-    public class Fit 
+    [Table("Fit")]
+    public class Fit : Przepisy
     {
-        [Key]
-        public int idFit { get; set; }
+
         public bool z_owsianka { get; set; }
         public bool z_jogurtem { get; set; }
         public bool z_owocami { get; set; }
         public bool z_kasza { get; set; }
         public bool z_ryzem { get; set; }
-        [ForeignKey("Przepis")]
-        public int idPrzepis { get; set; }
+
     }
 }
