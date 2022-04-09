@@ -17,48 +17,48 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Interface
         public IEnumerable<Przepisy> Pobierz();
 
         //sniadania
-        public Sniadania PobierzSniadanie(int idPrzepisu);
-        public IEnumerable<Sniadania> pobierzSniadania(SniadaniaF filtr);
+        public Sniadania PobierzSniadania(int idPrzepisu);
+        public IEnumerable<Sniadania> PobierzSniadania(SniadaniaF filtr);
         public IEnumerable<Sniadania> PobierzSniadania();
         //obiady
      
-        public Obiady PobierzObiad(int idPrzepisu);
-        public IEnumerable<Obiady> pobierzObiad(ObiadyF filtr);
+        public Obiady PobierzObiady(int idPrzepisu);
+        public IEnumerable<Obiady> PobierzObiady(ObiadyF filtr);
         public IEnumerable<Obiady> PobierzObiady();
         //kolacje
 
         public Kolacje PobierzKolacje(int idPrzepisu);
-        public IEnumerable<Kolacje> pobierzKolacje(KolacjeF filtr);
+        public IEnumerable<Kolacje> PobierzKolacje(KolacjeF filtr);
         public IEnumerable<Kolacje> PobierzKolacje();
         //Fit
 
         public Fit PobierzFit(int idPrzepisu);
-        public IEnumerable<Fit> pobierzFit(FitF filtr);
+        public IEnumerable<Fit> PobierzFit(FitF filtr);
         public IEnumerable<Fit> PobierzFit();
         //Ciasta
 
         public Ciasta PobierzCiasta(int idPrzepisu);
-        public IEnumerable<Ciasta> pobierzCiasta(CiastaF filtr);
+        public IEnumerable<Ciasta> PobierzCiasta(CiastaF filtr);
         public IEnumerable<Ciasta> PobierzCiasta();
         //Drinki
 
         public Drinki PobierzDrinki(int idPrzepisu);
-        public IEnumerable<Drinki> pobierzDriki(DrinkiF filtr);
+        public IEnumerable<Drinki> PobierzDrinki(DrinkiF filtr);
         public IEnumerable<Drinki> PobierzDrinki();
         //Salatki
 
         public Salatki PobierzSalatki(int idPrzepisu);
-        public IEnumerable<Salatki> pobierzSalatki(SalatkiF filtr);
+        public IEnumerable<Salatki> PobierzSalatki(SalatkiF filtr);
         public IEnumerable<Salatki> PobierzSalatki();
         //Slone przekaski
 
         public Slone_przekaski PobierzSlone_przekaski(int idPrzepisu);
-        public IEnumerable<Slone_przekaski> pobierzSlone_przekaski(SloneF filtr);
+        public IEnumerable<Slone_przekaski> PobierzSlone_przekaski(SloneF filtr);
         public IEnumerable<Slone_przekaski> PobierzSlone_przekaski();
         //sosy
 
         public Sosy PobierzSosy(int idPrzepisu);
-        public IEnumerable<Sosy> pobierzSosy(SosyF filtr);
+        public IEnumerable<Sosy> PobierzSosy(SosyF filtr);
         public IEnumerable<Sosy> PobierzSosy();
     }
 }

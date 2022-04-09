@@ -46,7 +46,7 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
             return unitOfWork.PrzepisyCiastaRepo.PobierzPoId(idPrzepisu);
         }
 
-        public IEnumerable<Ciasta> pobierzCiasta(Filtry.CiastaF filtr)
+        public IEnumerable<Ciasta> PobierzCiasta(Filtry.CiastaF filtr)
         {
             return unitOfWork.PrzepisyCiastaRepo.Pobierz().Where(p=>
             p.na_cieplo==filtr.na_cieplo&&
@@ -62,7 +62,7 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
             return unitOfWork.PrzepisyCiastaRepo.Pobierz();
         }
 
-        public IEnumerable<Drinki> pobierzDriki(Filtry.DrinkiF filtr)
+        public IEnumerable<Drinki> PobierzDrinki(Filtry.DrinkiF filtr)
         {
             return unitOfWork.PrzepisyDrinkiRepo.Pobierz().Where(p =>
             p.bezalkoholowy = filtr.bezalkoholowy &&
@@ -87,7 +87,7 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
             return unitOfWork.PrzepisyFitRepo.PobierzPoId(idPrzepisu);
         }
 
-        public IEnumerable<Fit> pobierzFit(Filtry.FitF filtr)
+        public IEnumerable<Fit> PobierzFit(Filtry.FitF filtr)
         {
             return unitOfWork.PrzepisyFitRepo.Pobierz().Where(p =>
             p.z_jogurtem == filtr.z_jogurtem &&
@@ -107,7 +107,7 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
             return unitOfWork.PrzepisyKolacjeRepo.PobierzPoId(idPrzepisu);
         }
 
-        public IEnumerable<Kolacje> pobierzKolacje(Filtry.KolacjeF filtr)
+        public IEnumerable<Kolacje> PobierzKolacje(Filtry.KolacjeF filtr)
         {
             return unitOfWork.PrzepisyKolacjeRepo.Pobierz().Where(p =>
             p.fit == filtr.fit &&
@@ -120,12 +120,12 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
             return unitOfWork.PrzepisyKolacjeRepo.Pobierz();
         }
 
-        public Obiady PobierzObiad(int idPrzepisu)
+        public Obiady PobierzObiady(int idPrzepisu)
         {
             return unitOfWork.PrzepisyObiadyRepo.PobierzPoId(idPrzepisu);
         }
 
-        public IEnumerable<Obiady> pobierzObiad(Filtry.ObiadyF filtr)
+        public IEnumerable<Obiady> PobierzObiady(Filtry.ObiadyF filtr)
         {
             return unitOfWork.PrzepisyObiadyRepo.Pobierz().Where(p =>
             p.z_kartoflami == filtr.z_kartoflami &&
@@ -147,7 +147,7 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
             return unitOfWork.PrzepisySalatkiRepo.PobierzPoId(idPrzepisu);
         }
 
-        public IEnumerable<Salatki> pobierzSalatki(Filtry.SalatkiF filtr)
+        public IEnumerable<Salatki> PobierzSalatki(Filtry.SalatkiF filtr)
         {
             return unitOfWork.PrzepisySalatkiRepo.Pobierz().Where(p =>
             p.z_makaronem == filtr.z_makaronem &&
@@ -166,7 +166,7 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
             return unitOfWork.PrzepisySloneRepo.PobierzPoId(idPrzepisu);
         }
 
-        public IEnumerable<Slone_przekaski> pobierzSlone_przekaski(Filtry.SloneF filtr)
+        public IEnumerable<Slone_przekaski> PobierzSlone_przekaski(Filtry.SloneF filtr)
         {
             return unitOfWork.PrzepisySloneRepo.Pobierz().Where(p =>
             p.na_cieplo == filtr.na_cieplo &&
@@ -178,7 +178,7 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
             return unitOfWork.PrzepisySloneRepo.Pobierz();
         }
 
-        public IEnumerable<Sniadania> pobierzSniadania(Filtry.SniadaniaF filtr)
+        public IEnumerable<Sniadania> PobierzSniadania(Filtry.SniadaniaF filtr)
         {
             return unitOfWork.PrzepisySniadaniaRepo.Pobierz().Where(p =>
             p.bez_miesa == filtr.bez_miesa &&
@@ -192,7 +192,7 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
             return unitOfWork.PrzepisySniadaniaRepo.Pobierz();
         }
 
-        public Sniadania PobierzSniadanie(int idPrzepisu)
+        public Sniadania PobierzSniadania(int idPrzepisu)
         {
             return unitOfWork.PrzepisySniadaniaRepo.PobierzPoId(idPrzepisu);
         }
@@ -202,7 +202,7 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
             return unitOfWork.PrzepisySosyaRepo.PobierzPoId(idPrzepisu);
         }
 
-        public IEnumerable<Sosy> pobierzSosy(Filtry.SosyF filtr)
+        public IEnumerable<Sosy> PobierzSosy(Filtry.SosyF filtr)
         {
             return unitOfWork.PrzepisySosyaRepo.Pobierz().Where(p =>
             p.slone == filtr.slone &&
