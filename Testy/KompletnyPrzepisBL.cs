@@ -7,16 +7,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Testy;
 using static KsiazkaPrzepisyKokot.ObiektyPosrednie.Filtry;
 
 namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
 {
     public class KompletnyPrzepisBL : IKompletnyPrzepisBL
     {
-        private readonly UnitOfWork_ unitOfWork;
+        private readonly UnitOfWorkTest unitOfWork;
         private readonly PrzepisyBL przepisy;
         private readonly SkladnikiPrzepisuBL skladniki;
-        public KompletnyPrzepisBL(UnitOfWork_ unitOfWork, PrzepisyBL przepisy, SkladnikiPrzepisuBL skladniki)
+        public KompletnyPrzepisBL(UnitOfWorkTest unitOfWork, PrzepisyBL przepisy, SkladnikiPrzepisuBL skladniki)
         {
             this.unitOfWork = unitOfWork;
             this.przepisy = przepisy;

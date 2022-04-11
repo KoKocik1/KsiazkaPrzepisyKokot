@@ -26,6 +26,6 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Interface
         public IEnumerable<PelnyPrzepis> PobierzPrzepisyPoFiltrze(SalatkiF filtr);
         public IEnumerable<PelnyPrzepis> PobierzPrzepisyPoFiltrze(SloneF filtr);
         public IEnumerable<PelnyPrzepis> PobierzPrzepisyPoFiltrze(SosyF filtr);
-
+        public IEnumerable<PelnyPrzepis> PobierzPrzepisyPoFiltrze(DrinkiF filtr);
     }
 }
