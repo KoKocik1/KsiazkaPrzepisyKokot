@@ -7,8 +7,7 @@ using System.Text;
 
 namespace Testy
 {
-    public class TestMockRepo
-    {
+
         public class MockRepository<T> : Mock<IRepository<T>>
         {
             public MockRepository<T> MockGetByID(T result)
@@ -27,5 +26,5 @@ namespace Testy
             }
 
         }
-    }
+    
 }

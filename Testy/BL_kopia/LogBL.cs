@@ -68,7 +68,7 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
 
         public Log Pobierz(string login, string passwd)
         {
-            Log log = unitOfWork.LogRepo.Pobierz().FirstOrDefault();
+            Log log = unitOfWork.LogRepo.PobierzPoId(0);
             if (log == null)
                 throw new ArgumentException("zle haslo lub login");
             return log;

@@ -1,4 +1,5 @@
 ﻿using KsiazkaPrzepisyKokot.Models;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
 namespace KsiazkaPrzepisyKokot.Database
@@ -29,6 +30,11 @@ namespace KsiazkaPrzepisyKokot.Database
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            /*
+            SqliteConnection _connection = new SqliteConnection("Filename=:memory:");
+            _connection.Open();
+            optionsBuilder.UseSqlite(_connection);
+            */
             optionsBuilder.UseSqlite("Data Source=C:\\Users\\SRRobotics\\source\\repos\\KsiazkaPrzepisyKokot\\KsiazkaPrzepisyKokot\\Database\\database.db");
         }
     }

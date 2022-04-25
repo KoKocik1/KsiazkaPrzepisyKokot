@@ -17,6 +17,8 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
         }
         public Log Dodaj(Log log)
         {
+            Log pobranyLog = unitOfWork.LogRepo.PobierzPoId(log.idLog);
+            if(pobranyLog==null)
             unitOfWork.LogRepo.Dodaj(log);
             return log;
         }

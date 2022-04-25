@@ -7,38 +7,46 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
-using static Testy.TestMockRepo;
+
 
 namespace Testy
 {
-    class TestBL
+    class TestyBussinesLayer
     {
         UnitOfWorkTest testUnitOfWork = new UnitOfWorkTest();
 
         [Test]
         public void getLogByTest()
         {
+            LogBL_ logBL = new LogBL_(testUnitOfWork);
+
             var mockRepo = new MockRepository<Log>();
 
+            Log log = new Log { nazwisko = "abc", haslo = "xxx", imie = "abc", login = "test" };
+
             mockRepo.Setup(p => p.PobierzPoId(It.IsAny<int>()))
-                .Returns(new Log { nazwisko = "abc", haslo = "xxx", imie = "abc", login = "test" });
+                .Returns(log);
+
             testUnitOfWork.log_ = mockRepo.Object;
 
-            LogBL_ logBL = new LogBL_(testUnitOfWork);
-            Assert.Equals("ABC", logBL.Pobierz("test", "xxx"));
+            Assert.AreEqual(log, logBL.Pobierz(It.IsAny<string>(), It.IsAny<string>()));
         }
+        [Test]
         public void getPrzepisByIdTest()
         {
+            PrzepisyBL przepisyBL = new PrzepisyBL(testUnitOfWork);
+
             var mockRepo = new MockRepository<Przepisy>();
 
+            Przepisy przepis = new Przepisy { Przepis = "abc", czas = TimeSpan.Zero, data = DateTime.Now, idPrzepisu = 0, liczbaPorcji = 5, nazwaDania = "xx" };
+
             mockRepo.Setup(p => p.PobierzPoId(It.IsAny<int>()))
-                .Returns(new Przepisy { Przepis = "abc", czas = TimeSpan.Zero, data = DateTime.Now, idPrzepisu = 0, liczbaPorcji = 5, nazwaDania = "xx" });
+                .Returns(przepis);
 
             testUnitOfWork.przepisy_ = mockRepo.Object;
 
-            //KompletnyPrzepisBL przepisy = new KompletnyPrzepisBL(testUnitOfWork);
+            Assert.AreEqual(przepis, przepisyBL.Pobierz(It.IsAny<int>()));
 
-           // Assert.Equals("abc", przepisy.Pobierz(0));
         }
     }
 }
