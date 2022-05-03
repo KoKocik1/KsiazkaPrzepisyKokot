@@ -9,6 +9,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using KsiazkaPrzepisyKokot.Database;
+using KsiazkaPrzepisyKokot.Repository.Interfaces;
+using KsiazkaPrzepisyKokot.UnitOfWork;
+using KsiazkaPrzepisyKokot.BuisnessLayer.Interface;
+using KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.Swagger;
 
 namespace KsiazkaPrzepisyKokot
 {
@@ -24,8 +30,35 @@ namespace KsiazkaPrzepisyKokot
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddCors(c =>
+            {
+                c.AddPolicy(
+                name: "AllowOrigin",
+                builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                });
+            });
+            
+                   
             services.AddDbContext<BazaDanych>();
+
+            services.AddScoped<UnitOfWork_>();
+            services.AddScoped<SkladnikiPrzepisuBL>();
+            services.AddScoped<UlubioneBL>();
+            services.AddScoped<LogBL>();
+            services.AddScoped<PrzepisyBL>();
+            services.AddScoped<WszystkieSkladnikiBL>();      
+            services.AddScoped<KompletnyPrzepisBL>();
+            services.AddControllers();
+
+            services.AddSwaggerGen(c =>
+            {
+                //c.SwaggerDoc("v1", new OpenApiInfo { Title = "KsiazkaPrzepisyKokot", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API WSVAP (WebSmartView)", Version = "v1" });
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First()); //This line
+
+        });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -33,7 +66,11 @@ namespace KsiazkaPrzepisyKokot
         {
             if (env.IsDevelopment())
             {
+                app.UseSwagger();
                 app.UseDeveloperExceptionPage();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("./v1/swagger.json", "My API V1")); //originally "./swagger/v1/swagger.json"
+               // app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "KsiazkaPrzepisyKokot v1"));
+
             }
             else
             {
@@ -41,19 +78,17 @@ namespace KsiazkaPrzepisyKokot
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-
             app.UseRouting();
+
+            app.UseCors("AllowOrigin");
 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllers();
             });
+
         }
     }
 }

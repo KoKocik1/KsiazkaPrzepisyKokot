@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KsiazkaPrzepisyKokot.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -23,8 +24,8 @@ namespace KsiazkaPrzepisyKokot.Models
         [ForeignKey(nameof(idPrzepisu)), Required]
         public Przepisy przepis { get; set; }
         [Required]
-        public string jaka_miara { get; set; }
+        public Miara jaka_miara { get; set; }
         [Required]
-        public int ilosc { get; set; }
+        public double ilosc { get; set; }
     }
 }

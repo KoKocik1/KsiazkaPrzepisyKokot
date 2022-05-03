@@ -23,5 +23,7 @@ namespace KsiazkaPrzepisyKokot.Models
         [Required]
         public int liczbaPorcji { get; set; }
 
+        public byte[] Obraz { get; set; }
+
     }
 }

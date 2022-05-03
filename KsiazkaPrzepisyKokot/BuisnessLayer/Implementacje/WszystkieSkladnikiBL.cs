@@ -87,7 +87,6 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
         public WszystkieSkladniki Pobierz(int idSkladnik)
         {
             return unitOfWork.WszystkieSkladnikiRepo.PobierzPoId(idSkladnik);
-                //.Pobierz().Where(p => p.idWszystkieSkladniki == idSkladnik).FirstOrDefault();
         }
 
         public IEnumerable<WszystkieSkladniki> Pobierz()
@@ -97,10 +96,8 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
 
         public bool Usun(int idSkladnik)
         {
-            WszystkieSkladniki s = Pobierz(idSkladnik);
-            if (s == null)
-                return false;
-            bool usuniete = unitOfWork.WszystkieSkladnikiRepo.Usun(s);
+
+            bool usuniete = unitOfWork.WszystkieSkladnikiRepo.Usun(idSkladnik);
             update();
             return usuniete;
         }

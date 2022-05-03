@@ -3,14 +3,16 @@ using System;
 using KsiazkaPrzepisyKokot.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KsiazkaPrzepisyKokot.Migrations
 {
     [DbContext(typeof(BazaDanych))]
-    partial class BazaDanychModelSnapshot : ModelSnapshot
+    [Migration("20220501212008_obraz")]
+    partial class obraz
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,11 +94,12 @@ namespace KsiazkaPrzepisyKokot.Migrations
                     b.Property<int>("idWszystkieSkladniki")
                         .HasColumnType("INTEGER");
 
-                    b.Property<double>("ilosc")
-                        .HasColumnType("REAL");
-
-                    b.Property<int>("jaka_miara")
+                    b.Property<int>("ilosc")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("jaka_miara")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("idSkladnika");
 

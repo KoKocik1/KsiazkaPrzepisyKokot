@@ -1,4 +1,5 @@
 ﻿using KsiazkaPrzepisyKokot.BuisnessLayer.Interface;
+using KsiazkaPrzepisyKokot.Interfaces;
 using KsiazkaPrzepisyKokot.Models;
 using KsiazkaPrzepisyKokot.ObiektyPosrednie;
 using KsiazkaPrzepisyKokot.UnitOfWork;
@@ -12,9 +13,13 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
     public class PrzepisyBL : IPrzepisyBL
     {
         private readonly UnitOfWork_ unitOfWork;
-        public PrzepisyBL(UnitOfWork_ unitOfWork)
+        private readonly SkladnikiPrzepisuBL skladniki;
+        private readonly UlubioneBL ulubione;
+        public PrzepisyBL(UnitOfWork_ unitOfWork, SkladnikiPrzepisuBL skladniki, UlubioneBL ulubione)
         {
             this.unitOfWork = unitOfWork;
+            this.skladniki = skladniki;
+            this.ulubione = ulubione;
         }
         public Przepisy Dodaj(Przepisy przepis)
         {
@@ -40,13 +45,25 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
         {
             return unitOfWork.PrzepisyRepo.Pobierz();
         }
+        public IEnumerable<Przepisy> PobierzPrzepisyPoSkladniku(int idSkladnika)
+        {
+            IEnumerable<SkladnikiPrzepisu> skladnikii = skladniki.PobierzPoSkladniku(idSkladnika);
+            List<Przepisy> znalezionePrzepisy = new List<Przepisy>();
+            foreach (SkladnikiPrzepisu s in skladnikii)
+            {
+                Przepisy p = unitOfWork.PrzepisyRepo.PobierzPoId(s.idPrzepisu);
+                if (p != null)
+                    znalezionePrzepisy.Add(p);
+            }
+            return znalezionePrzepisy;
 
+        }
         public Ciasta PobierzCiasta(int idPrzepisu)
         {
             return unitOfWork.PrzepisyCiastaRepo.PobierzPoId(idPrzepisu);
         }
 
-        public IEnumerable<Ciasta> PobierzCiasta(Filtry.CiastaF filtr)
+        public IEnumerable<Ciasta> PobierzCiasta(CiastaF filtr)
         {
             return unitOfWork.PrzepisyCiastaRepo.Pobierz().Where(p=>
             p.na_cieplo==filtr.na_cieplo&&
@@ -62,7 +79,7 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
             return unitOfWork.PrzepisyCiastaRepo.Pobierz();
         }
 
-        public IEnumerable<Drinki> PobierzDrinki(Filtry.DrinkiF filtr)
+        public IEnumerable<Drinki> PobierzDrinki(DrinkiF filtr)
         {
             return unitOfWork.PrzepisyDrinkiRepo.Pobierz().Where(p =>
             p.bezalkoholowy = filtr.bezalkoholowy &&
@@ -87,7 +104,7 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
             return unitOfWork.PrzepisyFitRepo.PobierzPoId(idPrzepisu);
         }
 
-        public IEnumerable<Fit> PobierzFit(Filtry.FitF filtr)
+        public IEnumerable<Fit> PobierzFit(FitF filtr)
         {
             return unitOfWork.PrzepisyFitRepo.Pobierz().Where(p =>
             p.z_jogurtem == filtr.z_jogurtem &&
@@ -107,7 +124,7 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
             return unitOfWork.PrzepisyKolacjeRepo.PobierzPoId(idPrzepisu);
         }
 
-        public IEnumerable<Kolacje> PobierzKolacje(Filtry.KolacjeF filtr)
+        public IEnumerable<Kolacje> PobierzKolacje(KolacjeF filtr)
         {
             return unitOfWork.PrzepisyKolacjeRepo.Pobierz().Where(p =>
             p.fit == filtr.fit &&
@@ -125,7 +142,7 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
             return unitOfWork.PrzepisyObiadyRepo.PobierzPoId(idPrzepisu);
         }
 
-        public IEnumerable<Obiady> PobierzObiady(Filtry.ObiadyF filtr)
+        public IEnumerable<Obiady> PobierzObiady(ObiadyF filtr)
         {
             return unitOfWork.PrzepisyObiadyRepo.Pobierz().Where(p =>
             p.z_kartoflami == filtr.z_kartoflami &&
@@ -147,7 +164,7 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
             return unitOfWork.PrzepisySalatkiRepo.PobierzPoId(idPrzepisu);
         }
 
-        public IEnumerable<Salatki> PobierzSalatki(Filtry.SalatkiF filtr)
+        public IEnumerable<Salatki> PobierzSalatki(SalatkiF filtr)
         {
             return unitOfWork.PrzepisySalatkiRepo.Pobierz().Where(p =>
             p.z_makaronem == filtr.z_makaronem &&
@@ -166,7 +183,7 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
             return unitOfWork.PrzepisySloneRepo.PobierzPoId(idPrzepisu);
         }
 
-        public IEnumerable<Slone_przekaski> PobierzSlone_przekaski(Filtry.SloneF filtr)
+        public IEnumerable<Slone_przekaski> PobierzSlone_przekaski(SloneF filtr)
         {
             return unitOfWork.PrzepisySloneRepo.Pobierz().Where(p =>
             p.na_cieplo == filtr.na_cieplo &&
@@ -178,7 +195,7 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
             return unitOfWork.PrzepisySloneRepo.Pobierz();
         }
 
-        public IEnumerable<Sniadania> PobierzSniadania(Filtry.SniadaniaF filtr)
+        public IEnumerable<Sniadania> PobierzSniadania(SniadaniaF filtr)
         {
             return unitOfWork.PrzepisySniadaniaRepo.Pobierz().Where(p =>
             p.bez_miesa == filtr.bez_miesa &&
@@ -202,7 +219,7 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
             return unitOfWork.PrzepisySosyaRepo.PobierzPoId(idPrzepisu);
         }
 
-        public IEnumerable<Sosy> PobierzSosy(Filtry.SosyF filtr)
+        public IEnumerable<Sosy> PobierzSosy(SosyF filtr)
         {
             return unitOfWork.PrzepisySosyaRepo.Pobierz().Where(p =>
             p.slone == filtr.slone &&
@@ -220,9 +237,152 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
             update();
             return usuniete;
         }
+
+        public IEnumerable<Przepisy> PobierzPrzepisyPoRodzajuPosilku(RodzajePosilkow rodzajPosilku)
+        {
+            IEnumerable<Przepisy> listaPrzepisow_ = new List<Przepisy>();
+            switch (rodzajPosilku)
+            {
+                case RodzajePosilkow.Ciasto:
+                    {
+                        listaPrzepisow_ = PobierzCiasta();
+                        break;
+                    }
+                case RodzajePosilkow.Drink:
+                    {
+                        listaPrzepisow_ =PobierzDrinki();
+                        break;
+                    }
+                case RodzajePosilkow.Fit:
+                    {
+                        listaPrzepisow_ =PobierzFit();
+                        break;
+                    }
+                case RodzajePosilkow.Kolacja:
+                    {
+                        listaPrzepisow_ =PobierzKolacje();
+                        break;
+                    }
+                case RodzajePosilkow.Obiad:
+                    {
+                        listaPrzepisow_ =PobierzObiady();
+                        break;
+                    }
+                case RodzajePosilkow.Salatka:
+                    {
+                        listaPrzepisow_ =PobierzSalatki();
+                        break;
+                    }
+                case RodzajePosilkow.Slona_przekaska:
+                    {
+                        listaPrzepisow_ =PobierzSlone_przekaski();
+                        break;
+                    }
+                case RodzajePosilkow.Sniadanie:
+                    {
+                        listaPrzepisow_ =PobierzSniadania();
+                        break;
+                    }
+                case RodzajePosilkow.Sos:
+                    {
+                        listaPrzepisow_ =PobierzSosy();
+                        break;
+                    }
+            }
+            return listaPrzepisow_;
+
+        }
+
+        public IEnumerable<Przepisy> PobierzPrzepisyPoSkladnikachOrazTypieDania(int[] idSkladnikow,RodzajePosilkow rodzaj)
+        {
+
+            List<Przepisy> listaPelnychPrzepisow = new List<Przepisy>();
+            IEnumerable<Przepisy> listaWszystkichPrzepisow = PobierzPrzepisyPoRodzajuPosilku(rodzaj);
+            foreach (Przepisy s in listaWszystkichPrzepisow)
+            {
+                IEnumerable<WszystkieSkladniki> skladnikiKonkretnegoPRzepisu = skladniki.PobierzSkladnikiPoPrzepisie(s.idPrzepisu);
+                bool posiadaWszytskieSkladniki = true;
+                for (int i = 0; i < idSkladnikow.Length; i++)
+                {
+                    bool posiadaJedenSkladnik = false;
+                    for (int j = 0; j < skladnikiKonkretnegoPRzepisu.Count(); j++)
+                    {
+                        if (idSkladnikow[i] == skladnikiKonkretnegoPRzepisu.ElementAt(j).idWszystkieSkladniki)
+                        {
+                            posiadaJedenSkladnik = true;
+                            break;
+                        }
+                    }
+                    if (!posiadaJedenSkladnik)
+                    {
+                        posiadaWszytskieSkladniki = false;
+                        break;
+                    }
+                }
+                if (posiadaWszytskieSkladniki)
+                {
+                    if (!listaPelnychPrzepisow.Contains(s))
+                        listaPelnychPrzepisow.Add(s);
+                }
+            }
+            return listaPelnychPrzepisow;
+        }
+        public IEnumerable<Przepisy> PobierzPrzepisyPoSkladnikach(int[] idSkladnikow)
+        {
+            
+            List<Przepisy> listaPelnychPrzepisow = new List<Przepisy>();
+            IEnumerable<Przepisy> listaWszystkichPrzepisow = Pobierz();
+            foreach (Przepisy s in listaWszystkichPrzepisow)
+            {
+                IEnumerable<WszystkieSkladniki> skladnikiKonkretnegoPRzepisu = skladniki.PobierzSkladnikiPoPrzepisie(s.idPrzepisu);
+                bool posiadaWszytskieSkladniki = true;
+                for (int i = 0; i < idSkladnikow.Length; i++)
+                {
+                    bool posiadaJedenSkladnik = false;
+                    for (int j = 0; j < skladnikiKonkretnegoPRzepisu.Count(); j++)
+                    {
+                        if (idSkladnikow[i] == skladnikiKonkretnegoPRzepisu.ElementAt(j).idWszystkieSkladniki)
+                        {
+                            posiadaJedenSkladnik = true;
+                            break;
+                        }
+                    }
+                    if (!posiadaJedenSkladnik)
+                    {
+                        posiadaWszytskieSkladniki = false;
+                        break;
+                    }
+                }
+                if (posiadaWszytskieSkladniki)
+                {
+                    if (!listaPelnychPrzepisow.Contains(s))
+                        listaPelnychPrzepisow.Add(s);
+                }
+            }
+            return listaPelnychPrzepisow;
+        }
+        public IEnumerable<Przepisy> PobierzUlubione()
+        {
+            List<Przepisy> listaPelnychPrzepisow = new List<Przepisy>();
+            IEnumerable<Ulubione> listaUlubionych = new List<Ulubione>();
+            listaUlubionych = ulubione.Pobierz();
+            foreach (Ulubione s in listaUlubionych)
+            {
+                listaPelnychPrzepisow.Add(Pobierz(s.idPrzepis));
+            }
+            return listaPelnychPrzepisow;
+        }
+
+        public Przepisy PobierzUlubiony(int idUlubiony)
+        {
+            return Pobierz(ulubione.Pobierz(idUlubiony).idPrzepis);
+        }
+
         private void update()
         {
             unitOfWork.Save();
         }
+
+        
     }
 }

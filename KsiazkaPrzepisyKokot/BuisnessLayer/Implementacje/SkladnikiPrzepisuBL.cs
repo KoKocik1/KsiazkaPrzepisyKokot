@@ -1,4 +1,5 @@
 ﻿using KsiazkaPrzepisyKokot.BuisnessLayer.Interface;
+using KsiazkaPrzepisyKokot.Interfaces;
 using KsiazkaPrzepisyKokot.Models;
 using KsiazkaPrzepisyKokot.UnitOfWork;
 using System;
@@ -12,6 +13,7 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
     {
 
         private readonly UnitOfWork_ unitOfWork;
+
         public SkladnikiPrzepisuBL(UnitOfWork_ unitOfWork)
         {
             this.unitOfWork = unitOfWork;
@@ -24,7 +26,7 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
         }
 
 
-        public SkladnikiPrzepisu Dodaj(int idPrzepisu, int idSkladnik, string miara, int ilosc)
+        public SkladnikiPrzepisu Dodaj(int idPrzepisu, int idSkladnik, Miara miara, double ilosc)
         {
             Przepisy p = unitOfWork.PrzepisyRepo.PobierzPoId(idPrzepisu);
             WszystkieSkladniki w = unitOfWork.WszystkieSkladnikiRepo.PobierzPoId(idSkladnik);
@@ -43,7 +45,7 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
         else throw new ArgumentException("błędne id przepisu lub skladnika");
         }
 
-        public SkladnikiPrzepisu Dodaj(Przepisy przepis, WszystkieSkladniki skladnik, string miara, int ilosc)
+        public SkladnikiPrzepisu Dodaj(Przepisy przepis, WszystkieSkladniki skladnik, Miara miara, int ilosc)
         {
 
             SkladnikiPrzepisu nowySkladnikPrzepisu= new SkladnikiPrzepisu{
@@ -58,6 +60,18 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
             return nowySkladnikPrzepisu;
         }
 
+        public SkladnikiPrzepisu Edytuj(SkladnikiPrzepisu skkladnik)
+        {
+            SkladnikiPrzepisu s = Pobierz(skkladnik.idSkladnika, skkladnik.idPrzepisu);
+            if (s == null)
+                throw new ArgumentException("brak takiego skladnika w bazie skladnikiPrzepisu");
+            s.ilosc = skkladnik.ilosc;
+            s.jaka_miara = skkladnik.jaka_miara;
+            unitOfWork.SkladnikiPrzepisuRepo.Aktualizuj(s);
+            update();
+            return s;
+        }
+
         public SkladnikiPrzepisu EdytujIlosc(int idPrzepisu, int idSkladnik, int ilosc)
         {
             SkladnikiPrzepisu s = Pobierz(idSkladnik, idPrzepisu);
@@ -69,7 +83,7 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
             return s;
         }
 
-        public SkladnikiPrzepisu EdytujMiara(int idPrzepisu, int idSkladnik, string miara)
+        public SkladnikiPrzepisu EdytujMiara(int idPrzepisu, int idSkladnik, Miara miara)
         {
             SkladnikiPrzepisu s = Pobierz(idSkladnik,idPrzepisu);
             if (s == null)
@@ -85,6 +99,11 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
             return unitOfWork.SkladnikiPrzepisuRepo.Pobierz().Where(p => p.idPrzepisu == idPrzepisu&&p.idSkladnika==idSkladnika).FirstOrDefault();
         }
 
+        public SkladnikiPrzepisu PobierzPoId(int idSkladnika)
+        {
+            return unitOfWork.SkladnikiPrzepisuRepo.Pobierz().Where(p => p.idWszystkieSkladniki == idSkladnika).FirstOrDefault();
+        }
+
         public IEnumerable<SkladnikiPrzepisu> PobierzPoPrzepisie(int idPrzepisu)
         {
             return unitOfWork.SkladnikiPrzepisuRepo.Pobierz().Where(p => p.idPrzepisu == idPrzepisu);
@@ -95,19 +114,6 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
             return unitOfWork.SkladnikiPrzepisuRepo.Pobierz().Where(p => p.idSkladnika == idSkladnika);
         }
 
-        public IEnumerable<Przepisy> PobierzPrzepisyPoSkladniku(int idSkladnika)
-        {
-            IEnumerable<SkladnikiPrzepisu> skladniki = PobierzPoSkladniku(idSkladnika);
-            List<Przepisy> znalezionePrzepisy= new List<Przepisy>();
-            foreach (SkladnikiPrzepisu s in skladniki)
-            {
-                Przepisy p = unitOfWork.PrzepisyRepo.PobierzPoId(s.idPrzepisu);
-                if(p!=null)
-                znalezionePrzepisy.Add(p);
-            }
-            return znalezionePrzepisy;
-
-        }
 
         public IEnumerable<WszystkieSkladniki> PobierzSkladnikiPoPrzepisie(int idPrzepisu)
         {
@@ -129,6 +135,12 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
                 return false;
 
             bool usuniete= unitOfWork.SkladnikiPrzepisuRepo.Usun(s);
+            update();
+            return usuniete;
+        }
+        public bool UsunSkladnikZprzepisu(int idSkladnikaPrzepisu)
+        {
+            bool usuniete = unitOfWork.SkladnikiPrzepisuRepo.Usun(idSkladnikaPrzepisu);
             update();
             return usuniete;
         }

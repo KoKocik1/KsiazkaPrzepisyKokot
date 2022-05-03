@@ -9,4 +9,8 @@ namespace KsiazkaPrzepisyKokot.Interfaces
     {
         Sniadanie, Obiad, Kolacja, Salatka, Slona_przekaska, Sos, Ciasto, Drink,Fit
     }
+    public enum Miara
+    {
+        Łyżka, Łyżeczka, Szklanka, Gram
+    }
 }

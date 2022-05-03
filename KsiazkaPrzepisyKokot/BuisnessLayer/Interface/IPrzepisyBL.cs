@@ -1,9 +1,10 @@
-﻿using KsiazkaPrzepisyKokot.Models;
+﻿using KsiazkaPrzepisyKokot.Interfaces;
+using KsiazkaPrzepisyKokot.Models;
+using KsiazkaPrzepisyKokot.ObiektyPosrednie;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static KsiazkaPrzepisyKokot.ObiektyPosrednie.Filtry;
 
 namespace KsiazkaPrzepisyKokot.BuisnessLayer.Interface
 {
@@ -13,10 +14,17 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Interface
         public Przepisy Dodaj(Przepisy przepis);
         public Przepisy Edytuj(Przepisy przepis);
         public bool Usun(int idPrzepisu);
-        public Przepisy Pobierz(int idPrzepisu);
-        public IEnumerable<Przepisy> Pobierz();
 
-        //sniadania
+        public Przepisy Pobierz(int idPrzepisu);
+        public IEnumerable<Przepisy> PobierzPrzepisyPoSkladniku(int idSkladnia);
+        public IEnumerable<Przepisy> PobierzPrzepisyPoSkladnikach(int[] idSkladnikow);
+        public IEnumerable<Przepisy> PobierzPrzepisyPoSkladnikachOrazTypieDania(int[] idSkladnikow, RodzajePosilkow rodzaj);
+        public IEnumerable<Przepisy> PobierzPrzepisyPoRodzajuPosilku(RodzajePosilkow rodzajPosilku);
+        public IEnumerable<Przepisy> Pobierz();
+        public IEnumerable<Przepisy> PobierzUlubione();
+        public Przepisy PobierzUlubiony(int idUlubiony);
+
+        //sniadania 
         public Sniadania PobierzSniadania(int idPrzepisu);
         public IEnumerable<Sniadania> PobierzSniadania(SniadaniaF filtr);
         public IEnumerable<Sniadania> PobierzSniadania();
@@ -60,5 +68,7 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Interface
         public Sosy PobierzSosy(int idPrzepisu);
         public IEnumerable<Sosy> PobierzSosy(SosyF filtr);
         public IEnumerable<Sosy> PobierzSosy();
+
+       
     }
 }

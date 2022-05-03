@@ -25,7 +25,6 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
         public Ulubione Pobierz(int idUlubione)
         {
             return unitOfWork.UlubioneRepo.PobierzPoId(idUlubione);
-            //Pobierz().Where(p => p.idPrzepis == idUlubione).FirstOrDefault();
         }
 
         public IEnumerable<Ulubione> Pobierz()
