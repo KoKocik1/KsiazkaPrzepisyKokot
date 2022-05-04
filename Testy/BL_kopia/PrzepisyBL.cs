@@ -11,13 +11,17 @@ using Testy;
 
 namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
 {
-    public class PrzepisyBL : IPrzepisyBL
+    public class PrzepisyBL_ : IPrzepisyBL
     {
         private readonly UnitOfWorkTest unitOfWork;
 
-        public PrzepisyBL(UnitOfWorkTest unitOfWork)
+        public PrzepisyBL_(UnitOfWorkTest unitOfWork)
         {
             this.unitOfWork = unitOfWork;
+        }
+        public PrzepisyBL_()
+        {
+            this.unitOfWork = new UnitOfWorkTest();
         }
         public Przepisy Dodaj(Przepisy przepis)
         {
@@ -311,6 +315,11 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
         private void update()
         {
             unitOfWork.Save();
+        }
+
+        public IEnumerable<Przepisy> PobierzPrzepisyPoSkladnikachOrazTypieDania(int[] idSkladnikow, RodzajePosilkow rodzaj)
+        {
+            throw new NotImplementedException();
         }
     }
 }

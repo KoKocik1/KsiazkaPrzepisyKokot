@@ -54,7 +54,7 @@ namespace Testy
             {
                 if (skladnikiPrzepisu_ == null)
                 {
-                    skladnikiPrzepisu_ =new MockRepository<SkladnikiPrzepisu>().Object;
+                    skladnikiPrzepisu_ = new MockRepository<SkladnikiPrzepisu>().Object;
                 }
                 return skladnikiPrzepisu_;
             }
@@ -195,10 +195,10 @@ namespace Testy
 
         public int Save()
         {
-            throw new NotImplementedException();
+            return 1;
         }
 
-        public Task<int> SaveAsync()
+        public async Task<int> SaveAsync()
         {
             throw new NotImplementedException();
         }

@@ -10,16 +10,17 @@ using System.Threading.Tasks;
 
 namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
 {
-    public class KompletnyPrzepisBL : IKompletnyPrzepisBL
+    public class KompletnyPrzepisBL_ : IKompletnyPrzepisBL
     {
 
-        private readonly PrzepisyBL przepisy;
-        private readonly SkladnikiPrzepisuBL skladniki;
-        public KompletnyPrzepisBL(PrzepisyBL przepisy, SkladnikiPrzepisuBL skladniki)
+        private readonly PrzepisyBL_ przepisy;
+        private readonly SkladnikiPrzepisuBL_ skladniki;
+        public KompletnyPrzepisBL_(PrzepisyBL_ przepisy, SkladnikiPrzepisuBL_ skladniki)
         {
             this.przepisy = przepisy;
             this.skladniki = skladniki;
         }
+
         public PelnyPrzepis Pobierz(int idPrzepisu)
         {
             PelnyPrzepis p = new PelnyPrzepis(przepisy.Pobierz(idPrzepisu), skladniki.PobierzPoPrzepisie(idPrzepisu));

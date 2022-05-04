@@ -16,6 +16,10 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
         {
             this.unitOfWork = unitOfWork;
         }
+        public LogBL_()
+        {
+            this.unitOfWork = new UnitOfWorkTest();
+        }
         public Log Dodaj(Log log)
         {
             unitOfWork.LogRepo.Dodaj(log);

@@ -34,7 +34,7 @@ namespace Testy
         [Test]
         public void getPrzepisByIdTest()
         {
-            PrzepisyBL przepisyBL = new PrzepisyBL(testUnitOfWork);
+            PrzepisyBL_ przepisyBL = new PrzepisyBL_(testUnitOfWork);
 
             var mockRepo = new MockRepository<Przepisy>();
 

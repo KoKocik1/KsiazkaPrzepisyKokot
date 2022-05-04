@@ -11,13 +11,13 @@ namespace KsiazkaPrzepisyKokot.ObiektyPosrednie
     public class PelnyPrzepis
     {
         public Przepisy przepis { get; set; }
-        public IEnumerable<WszystkieSkladniki> skladnikiPrzepisu { get; set; }
+        public IEnumerable<SkladnikiPrzepisu> skladnikiPrzepisu { get; set; }
 
         public PelnyPrzepis()
         {
 
         }
-        public PelnyPrzepis(Przepisy przepis, IEnumerable<WszystkieSkladniki> skladnikiPrzepisu)
+        public PelnyPrzepis(Przepisy przepis, IEnumerable<SkladnikiPrzepisu> skladnikiPrzepisu)
         {
             this.przepis = przepis;
             this.skladnikiPrzepisu = skladnikiPrzepisu;
