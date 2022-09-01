@@ -20,14 +20,17 @@ namespace KsiazkaPrzepisyKokot.Controllers
 
 
         //pobieranie przepisow
-        [HttpGet]
+       /* [HttpGet]
         public IEnumerable<Przepisy> Get()
-           => this.przepisyBL.Pobierz();
+           => this.przepisyBL.Pobierz();*/
 
         [HttpGet("IdPrzepisu/")]
         public Przepisy Get(int IdPrzepisu)
            => this.przepisyBL.Pobierz(IdPrzepisu);
 
+        [HttpGet]
+        public IEnumerable<Przepisy> Get([FromQuery] PaginationDto dto)
+    => this.przepisyBL.Pobierz(dto);
 
         //pobieranie po filtrach
         [HttpGet("filtrySniadania/")]

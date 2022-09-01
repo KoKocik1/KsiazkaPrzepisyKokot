@@ -25,7 +25,7 @@ namespace Testy.controller
 
             // Act
             // Assert
-                Assert.Throws<ArgumentException>(() => controller.Login(nonExistentLogin, nonExistentPasswd));
+            Assert.Throws<ArgumentException>(() => controller.Login(nonExistentLogin, nonExistentPasswd));
             
         }
     [Test]
@@ -80,7 +80,6 @@ namespace Testy.controller
 
             //polaczenie skladnikow z przepisem
             Assert.Throws<ArgumentException>(() => controllerSkladnikiPrzepisu.Post(przepisTestowy.idPrzepisu, skladnik1.idWszystkieSkladniki, KsiazkaPrzepisyKokot.Interfaces.Miara.Szklanka, 3));
-
             Assert.AreEqual(dodaneSniadanie, przepisTestowy);
             Assert.AreEqual(dodanyWszystkiSkladnik, skladnik1);
 

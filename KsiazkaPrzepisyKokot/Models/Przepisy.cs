@@ -19,11 +19,11 @@ namespace KsiazkaPrzepisyKokot.Models
         [MaxLength(100), Required]
         public string nazwaDania { get; set; }
         [Required]
-        public TimeSpan czas { get; set; }
+        public int czas { get; set; }
         [Required]
         public int liczbaPorcji { get; set; }
 
-        public byte[] Obraz { get; set; }
+        public String Obraz { get; set; }
 
     }
 }

@@ -12,7 +12,7 @@ namespace KsiazkaPrzepisyKokot.ObiektyPosrednie
     {
         public Przepisy przepis { get; set; }
         public IEnumerable<SkladnikiPrzepisu> skladnikiPrzepisu { get; set; }
-
+       // public IEnumerable<WszystkieSkladniki> wszystkieSkladniki { get; set; }
         public PelnyPrzepis()
         {
 
@@ -21,6 +21,7 @@ namespace KsiazkaPrzepisyKokot.ObiektyPosrednie
         {
             this.przepis = przepis;
             this.skladnikiPrzepisu = skladnikiPrzepisu;
+            //this.wszystkieSkladniki=
         }
         
         public override string ToString()

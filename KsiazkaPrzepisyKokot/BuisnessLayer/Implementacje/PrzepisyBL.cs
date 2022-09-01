@@ -41,6 +41,10 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
             return unitOfWork.PrzepisyRepo.PobierzPoId(idPrzepisu);
         }
 
+        public IEnumerable<Przepisy> Pobierz(PaginationDto dto)
+        {
+            return unitOfWork.PrzepisyRepo.Pobierz(dto);
+        }
         public IEnumerable<Przepisy> Pobierz()
         {
             return unitOfWork.PrzepisyRepo.Pobierz();

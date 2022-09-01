@@ -1,4 +1,5 @@
 ﻿using KsiazkaPrzepisyKokot.Database;
+using KsiazkaPrzepisyKokot.ObiektyPosrednie;
 using KsiazkaPrzepisyKokot.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -34,6 +35,10 @@ namespace KsiazkaPrzepisyKokot.Repository.Implementacje
         {
             return table.ToList();
             
+        }
+        public IEnumerable<T> Pobierz(PaginationDto dto)
+        {
+            return Pobierz().Skip((dto.Page - 1) * dto.RowsPerPage).Take(dto.RowsPerPage);
         }
 
         public T PobierzPoId(object id)

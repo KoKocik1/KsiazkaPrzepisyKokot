@@ -3,14 +3,16 @@ using System;
 using KsiazkaPrzepisyKokot.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KsiazkaPrzepisyKokot.Migrations
 {
     [DbContext(typeof(BazaDanych))]
-    partial class BazaDanychModelSnapshot : ModelSnapshot
+    [Migration("20220821153500_migracjaBlobNaString")]
+    partial class migracjaBlobNaString
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,16 +55,16 @@ namespace KsiazkaPrzepisyKokot.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Obraz")
-                        .HasColumnType("TEXT");
+                    b.Property<byte[]>("Obraz")
+                        .HasColumnType("BLOB");
 
                     b.Property<string>("Przepis")
                         .IsRequired()
                         .HasMaxLength(5000)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("czas")
-                        .HasColumnType("INTEGER");
+                    b.Property<TimeSpan>("czas")
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("data")
                         .HasColumnType("TEXT");

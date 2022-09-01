@@ -26,8 +26,8 @@ namespace KsiazkaPrzepisyKokot.Controllers
            => this.skladniki.PobierzPoPrzepisie(idPrzepisu);
 
         [HttpPut]
-        public SkladnikiPrzepisu Put([FromBody] SkladnikiPrzepisu przepis)
-           => this.skladniki.Edytuj(przepis);
+        public SkladnikiPrzepisu Put(int id, int ilosc)
+           => this.skladniki.Edytuj(id, ilosc);
 
         [HttpPost("DodajSkladnikiDoPrzepisu/")]
         public SkladnikiPrzepisu Post( int idPrzepis,  int idWszystkieSkladniki, Miara miara,  int ilosc)

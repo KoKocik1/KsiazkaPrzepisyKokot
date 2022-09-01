@@ -1,9 +1,14 @@
 ﻿using KsiazkaPrzepisyKokot.BuisnessLayer.Interface;
 using KsiazkaPrzepisyKokot.Models;
+using KsiazkaPrzepisyKokot.ObiektyPosrednie;
 using KsiazkaPrzepisyKokot.UnitOfWork;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
@@ -15,59 +20,69 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
         {
             this.unitOfWork = unitOfWork;
         }
-        public Log Dodaj(Log log)
+        public LogPost Dodaj(Log log)
         {
             Log pobranyLog = unitOfWork.LogRepo.PobierzPoId(log.idLog);
-            if(pobranyLog==null)
-            unitOfWork.LogRepo.Dodaj(log);
-            return log;
+            if (pobranyLog == null)
+                unitOfWork.LogRepo.Dodaj(log);
+            return new LogPost(log);
         }
 
-        public Log EdytujLogin(string login, string passwd, string newLogin)
+        public LogPost EdytujLogin(string login, string passwd, string newLogin)
         {
-            Log log = Pobierz(login, passwd);
+            Log log = PobierzLog(login, passwd);
             if (log == null)
                 throw new ArgumentException("zle haslo lub login");
-            
+
             log.login = newLogin;
             unitOfWork.LogRepo.Aktualizuj(log);
-            return log;
+            return new LogPost(log);
         }
 
-        public Log EdytujName(string login, string passwd, string newName)
+        public LogPost EdytujName(string login, string passwd, string newName)
         {
-            Log log = Pobierz(login, passwd);
+            Log log = PobierzLog(login, passwd);
             if (log == null)
                 throw new ArgumentException("zle haslo lub login");
 
             log.imie = newName;
             unitOfWork.LogRepo.Aktualizuj(log);
-            return log;
+            return new LogPost(log);
         }
 
-        public Log EdytujPasswd(string login, string passwd, string newPasswd)
+        public LogPost EdytujPasswd(string login, string passwd, string newPasswd)
         {
-            Log log = Pobierz(login, passwd);
+            Log log = PobierzLog(login, passwd);
             if (log == null)
                 throw new ArgumentException("zle haslo lub login");
 
             log.haslo = newPasswd;
             unitOfWork.LogRepo.Aktualizuj(log);
-            return log;
+            return new LogPost(log);
         }
 
-        public Log EdytujSurrname(string login, string passwd, string newSurrname)
+        public LogPost EdytujSurrname(string login, string passwd, string newSurrname)
         {
-            Log log = Pobierz(login, passwd);
+            Log log = PobierzLog(login, passwd);
             if (log == null)
                 throw new ArgumentException("zle haslo lub login");
 
             log.nazwisko = newSurrname;
             unitOfWork.LogRepo.Aktualizuj(log);
-            return log;
+            return new LogPost(log);
         }
 
-        public Log Pobierz(string login, string passwd)
+        public LogPost Pobierz(string login, string passwd)
+        {
+            if (login == null || passwd == null)
+                return null;
+            Log log = unitOfWork.LogRepo.Pobierz().Where(p => p.login.Contains(login) && p.haslo.Contains(passwd)).FirstOrDefault();
+            if (log == null)
+                return null; //throw new ArgumentException("zle haslo lub login");
+            return new LogPost(log);
+        }
+
+        public Log PobierzLog(string login, string passwd)
         {
             Log log = unitOfWork.LogRepo.Pobierz().Where(p => p.login.Contains(login) && p.haslo.Contains(passwd)).FirstOrDefault();
             if (log == null)
@@ -77,7 +92,7 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
 
         public bool Usun(string login, string passwd)
         {
-            Log log = Pobierz(login, passwd);
+            Log log = PobierzLog(login, passwd);
             if (log == null)
                 return false;
             return unitOfWork.LogRepo.Usun(log);

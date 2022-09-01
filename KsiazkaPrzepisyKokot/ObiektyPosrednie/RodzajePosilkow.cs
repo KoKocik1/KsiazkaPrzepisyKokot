@@ -11,6 +11,6 @@ namespace KsiazkaPrzepisyKokot.Interfaces
     }
     public enum Miara
     {
-        Łyżka, Łyżeczka, Szklanka, Gram
+        Łyżka, Łyżeczka, Szklanka, Gram, Sztuka
     }
 }

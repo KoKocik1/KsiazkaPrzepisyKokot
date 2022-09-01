@@ -30,10 +30,10 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
         {
             Przepisy p = unitOfWork.PrzepisyRepo.PobierzPoId(idPrzepisu);
             WszystkieSkladniki w = unitOfWork.WszystkieSkladnikiRepo.PobierzPoId(idSkladnik);
-            if (p != null && w != null) {
+            if (p != null && w!=null) {
                 SkladnikiPrzepisu skladnikNowy = new SkladnikiPrzepisu{
                     idPrzepisu = idPrzepisu,
-                    idSkladnika = idSkladnik,
+                    //idSkladnika = idSkladnik,
                     przepis=p,
                     wszystkieSkladniki=w,
                     jaka_miara = miara,
@@ -62,7 +62,8 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
 
         public SkladnikiPrzepisu Edytuj(SkladnikiPrzepisu skkladnik)
         {
-            SkladnikiPrzepisu s = Pobierz(skkladnik.idSkladnika, skkladnik.idPrzepisu);
+            SkladnikiPrzepisu s = Pobierz(skkladnik.idWszystkieSkladniki, skkladnik.idPrzepisu);
+            //SkladnikiPrzepisu s = PobierzPoId(skkladnik.idSkladnika);
             if (s == null)
                 throw new ArgumentException("brak takiego skladnika w bazie skladnikiPrzepisu");
             s.ilosc = skkladnik.ilosc;
@@ -71,7 +72,18 @@ namespace KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje
             update();
             return s;
         }
-
+        public SkladnikiPrzepisu Edytuj(int id, int ilosc)
+        {
+            //SkladnikiPrzepisu s = Pobierz(skkladnik.idWszystkieSkladniki, skkladnik.idPrzepisu);
+            SkladnikiPrzepisu s = PobierzPoSkladniku(id).ElementAt(0);
+            if (s == null)
+                throw new ArgumentException("brak takiego skladnika w bazie skladnikiPrzepisu");
+            s.ilosc = ilosc;
+            //s.jaka_miara = skkladnik.jaka_miara;
+            unitOfWork.SkladnikiPrzepisuRepo.Aktualizuj(s);
+            update();
+            return s;
+        }
         public SkladnikiPrzepisu EdytujIlosc(int idPrzepisu, int idSkladnik, int ilosc)
         {
             SkladnikiPrzepisu s = Pobierz(idSkladnik, idPrzepisu);

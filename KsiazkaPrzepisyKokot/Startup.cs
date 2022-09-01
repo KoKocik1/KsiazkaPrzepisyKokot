@@ -14,7 +14,8 @@ using KsiazkaPrzepisyKokot.UnitOfWork;
 using KsiazkaPrzepisyKokot.BuisnessLayer.Interface;
 using KsiazkaPrzepisyKokot.BuisnessLayer.Implementacje;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.Swagger;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace KsiazkaPrzepisyKokot
 {
@@ -30,6 +31,24 @@ namespace KsiazkaPrzepisyKokot
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                 .AddJwtBearer(options =>
+                 {
+                     options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                     {
+                         ValidateIssuer = true,
+                         ValidateAudience = true,
+                         ValidateLifetime = true,
+                         ValidateIssuerSigningKey = true,
+                         ValidIssuer = "http://localhost:44307",
+                         ValidAudience = "http://localhost:44307",
+                         IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("superSecretKey@345"))
+                     };
+                 });
             services.AddCors(c =>
             {
                 c.AddPolicy(
@@ -56,7 +75,7 @@ namespace KsiazkaPrzepisyKokot
             {
                 //c.SwaggerDoc("v1", new OpenApiInfo { Title = "KsiazkaPrzepisyKokot", Version = "v1" });
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API WSVAP (WebSmartView)", Version = "v1" });
-                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First()); //This line
+                //c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First()); //This line
 
         });
         }
@@ -66,18 +85,19 @@ namespace KsiazkaPrzepisyKokot
         {
             if (env.IsDevelopment())
             {
-                app.UseSwagger();
+               
                 app.UseDeveloperExceptionPage();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("./v1/swagger.json", "My API V1")); //originally "./swagger/v1/swagger.json"
-               // app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "KsiazkaPrzepisyKokot v1"));
+                app.UseSwagger();
+                // app.UseSwaggerUI(c => c.SwaggerEndpoint("./v1/swagger.json", "My API V1")); //originally "./swagger/v1/swagger.json"
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "KsiazkaPrzepisyKokot v1"));
 
             }
-            else
+            /*else
             {
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
-            }
+            }*/
             app.UseRouting();
 
             app.UseCors("AllowOrigin");

@@ -35,7 +35,7 @@ namespace KsiazkaPrzepisyKokot.Database
             _connection.Open();
             optionsBuilder.UseSqlite(_connection);
             */
-            optionsBuilder.UseSqlite("Data Source=C:\\Users\\SRRobotics\\source\\repos\\KsiazkaPrzepisyKokot\\KsiazkaPrzepisyKokot\\Database\\database.db");
+            optionsBuilder.UseSqlite("Data Source=Database\\database.db");
         }
     }
 }
